@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import { env } from 'process';
+import { env } from 'node:process';
 
 const redisUrl = env.STATUS_REDIS_URL as string;
 

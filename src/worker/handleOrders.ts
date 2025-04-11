@@ -9,6 +9,8 @@ import { createExecuteTransactionsRequest } from '@server/api/lib/api/createExec
 import { executeTransactions } from '@server/api/services/exchangeCalls/executeTransactions';
 import { setOrderStatus } from '@server/api/lib/orderRedis/setOrderStatus';
 import { Status } from '@server/api/const/status';
+import type { ExchangePostingResponse } from '@server/api/types/exchangePostingTypes';
+import type { Transaction } from '@server/api/types/transaction';
 
 export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 	// Sensible amount of maximum retries, if it goes over that, then major system issue is in effect
@@ -18,7 +20,18 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 		console.log(chalk.blue('createExchangePostingRequest'));
 		let exchangePostingResult = false;
 		let exchangePostingCounter = 0;
-		let exchangePostingResponse;
+		let exchangePostingResponse: ExchangePostingResponse = {
+			exchangePostingId: '',
+			filledSize: '',
+			filledFunds: '',
+			otherUserId: '',
+			buyerUserId: '',
+			buyerFunds: 0,
+			market: '',
+			marketPrice: 0,
+			orderType: '',
+			side: '',
+		};
 
 		while (!exchangePostingResult && exchangePostingCounter < maxRetryCount) {
 			try {
@@ -26,6 +39,7 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 					exchangePostingRequest,
 				);
 				exchangePostingResult = true;
+				exchangePostingCounter += 1;
 			} catch (error) {
 				exchangePostingResult = false;
 			}
@@ -54,10 +68,10 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 
 			console.log(chalk.blue('executeTransactions'));
 
-			let executeTransactionsResponse;
+			let executeTransactionsResponse: Transaction[] = [];
 			let executeTransactionsCounter = 0;
 
-			let executeTransactionsResult: boolean = false;
+			let executeTransactionsResult = false;
 
 			while (
 				!executeTransactionsResult &&
@@ -68,6 +82,7 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 						executeTransactionsRequestBody,
 					);
 					executeTransactionsResult = true;
+					executeTransactionsCounter += 1;
 				} catch (error) {
 					executeTransactionsResult = false;
 				}
