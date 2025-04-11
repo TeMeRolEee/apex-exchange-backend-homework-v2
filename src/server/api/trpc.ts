@@ -1,4 +1,4 @@
-import { getRedisClient } from "@server/api/lib/redisClient";
+import { getRedisClient } from '@server/api/lib/redisClient';
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1).
@@ -7,9 +7,9 @@ import { getRedisClient } from "@server/api/lib/redisClient";
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
-import superjson from "superjson";
-import { ZodError } from "zod";
+import { initTRPC } from '@trpc/server';
+import superjson from 'superjson';
+import { ZodError } from 'zod';
 
 /**
  * 1. CONTEXT

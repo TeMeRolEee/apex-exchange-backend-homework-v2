@@ -1,19 +1,21 @@
-import Redis from "ioredis";
-import { env } from "~/env";
+import Redis from 'ioredis';
+import { env } from 'node:process';
 
-const redisUrl = env.STATUS_REDIS_URL;
+const redisUrl = env.STATUS_REDIS_URL as string;
 
 let client: Redis;
 
 const initializeRedisClient = () => {
-	client = new Redis(redisUrl);
-
-	client.on("error", (err: Error) => {
-		console.error("Redis client error:", err);
+	client = new Redis(redisUrl, {
+		maxRetriesPerRequest: null,
 	});
 
-	client.on("connect", () => {
-		console.info("Connected to Redis successfully");
+	client.on('error', (err: Error) => {
+		console.error('Redis client error:', err);
+	});
+
+	client.on('connect', () => {
+		console.info('Connected to Redis successfully');
 	});
 };
 

@@ -1,11 +1,11 @@
-"use client";
-import { formOptions, useForm } from "@tanstack/react-form";
-import { zodValidator } from "@tanstack/zod-form-adapter";
-import { useState } from "react";
-import { z } from "zod";
-import { type RouterInputs, api } from "~/trpc/react";
+'use client';
+import { formOptions, useForm } from '@tanstack/react-form';
+import { zodValidator } from '@tanstack/zod-form-adapter';
+import { useState } from 'react';
+import { z } from 'zod';
+import { type RouterInputs, api } from '~/trpc/react';
 
-type OrderFormValues = RouterInputs["order"]["create"];
+type OrderFormValues = RouterInputs['order']['create'];
 
 export default function OrderPage() {
 	const [output, setOutput] = useState<string[]>([]);
@@ -18,7 +18,7 @@ export default function OrderPage() {
 		isSuccess,
 	} = api.order.create.useMutation({
 		onSuccess: () => {
-			setOutput((prev) => [...prev, "Order submitted successfully!"]);
+			setOutput((prev) => [...prev, 'Order submitted successfully!']);
 		},
 		onError: (err) => {
 			setOutput((prev) => [...prev, `Error: ${err.message}`]);
@@ -30,8 +30,8 @@ export default function OrderPage() {
 			userId: crypto.randomUUID(),
 			price: 100_000,
 			quantity: 1,
-			side: "buy",
-			market: "BTC-USDT",
+			side: 'buy',
+			market: 'BTC-USDT',
 		},
 	});
 
@@ -41,7 +41,7 @@ export default function OrderPage() {
 			if (values.value.price === 0 || values.value.quantity === 0) {
 				setOutput((prev) => [
 					...prev,
-					"Error: Price and quantity must be greater than 0",
+					'Error: Price and quantity must be greater than 0',
 				]);
 				return;
 			}
@@ -74,7 +74,7 @@ export default function OrderPage() {
 						name="price"
 						validatorAdapter={zodValidator()}
 						validators={{
-							onChange: z.number().positive("Price must be greater than 0"),
+							onChange: z.number().positive('Price must be greater than 0'),
 						}}
 						children={(field) => (
 							<>
@@ -103,7 +103,7 @@ export default function OrderPage() {
 						name="quantity"
 						validatorAdapter={zodValidator()}
 						validators={{
-							onChange: z.number().positive("Quantity must be greater than 0"),
+							onChange: z.number().positive('Quantity must be greater than 0'),
 						}}
 						children={(field) => (
 							<>
@@ -135,7 +135,7 @@ export default function OrderPage() {
 								id="side"
 								value={field.state.value}
 								onChange={(e) =>
-									field.handleChange(e.target.value as "buy" | "sell")
+									field.handleChange(e.target.value as 'buy' | 'sell')
 								}
 								className="w-full p-1 bg-black border border-green-400 text-green-400 focus:outline-none focus:border-yellow-400"
 							>
@@ -169,7 +169,7 @@ export default function OrderPage() {
 					disabled={isPending}
 					className="w-full p-2 bg-green-400 text-black hover:bg-green-500 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed"
 				>
-					$ {isPending ? "submitting_order..." : "submit_order"}
+					$ {isPending ? 'submitting_order...' : 'submit_order'}
 				</button>
 			</form>
 

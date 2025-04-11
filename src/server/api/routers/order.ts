@@ -1,6 +1,6 @@
-import { createOrders } from "@server/api/services/createOrders";
-import { OrderInputSchema } from "@server/api/types/order";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createOrders } from '@server/api/services/createOrders';
+import { OrderInputSchema } from '@server/api/types/order';
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
 
 export const orderRouter = createTRPCRouter({
 	create: publicProcedure

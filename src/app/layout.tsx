@@ -1,15 +1,15 @@
-import "~/styles/globals.css";
+import '~/styles/globals.css';
 
-import { GeistSans } from "geist/font/sans";
-import type { Metadata } from "next";
+import { GeistSans } from 'geist/font/sans';
+import type { Metadata } from 'next';
 
-import { TRPCReactProvider } from "~/trpc/react";
-import { Navigation } from "./_components/Navigation";
+import { TRPCReactProvider } from '~/trpc/react';
+import { Navigation } from './_components/Navigation';
 
 export const metadata: Metadata = {
-	title: "Apex Exchange Order Monitor",
-	description: "A simple order monitor for the Apex Exchange",
-	icons: [{ rel: "icon", url: "/favicon.png" }],
+	title: 'Apex Exchange Order Monitor',
+	description: 'A simple order monitor for the Apex Exchange',
+	icons: [{ rel: 'icon', url: '/favicon.png' }],
 };
 
 export default function RootLayout({

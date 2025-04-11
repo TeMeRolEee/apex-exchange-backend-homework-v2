@@ -1,8 +1,8 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-const navItems = [{ name: "Order", path: "/" }];
+const navItems = [{ name: 'Order', path: '/' }];
 
 export function Navigation() {
 	const pathname = usePathname();
@@ -14,10 +14,10 @@ export function Navigation() {
 					key={item.path}
 					href={item.path}
 					className={`mr-4 ${
-						pathname === item.path ? "text-yellow-400" : "text-green-400"
+						pathname === item.path ? 'text-yellow-400' : 'text-green-400'
 					}`}
 				>
-					{pathname === item.path ? ">" : "$"} {item.name}
+					{pathname === item.path ? '>' : '$'} {item.name}
 				</Link>
 			))}
 		</div>
