@@ -1,10 +1,10 @@
+import { env } from "~/env";
 import { apiCall } from "@server/api/lib/apiCall";
 import {
 	type ExchangePostingRequest,
 	type ExchangePostingResponse,
 	ExchangePostingResponseSchema,
 } from "@server/api/types/exchangePostingTypes";
-import { env } from "~/env";
 
 export const createExchangePosting = (
 	exchangePostingRequest: ExchangePostingRequest,
