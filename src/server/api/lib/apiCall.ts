@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 class ApiError extends Error {
 	constructor(
@@ -7,7 +7,7 @@ class ApiError extends Error {
 		public errorJson?: string,
 	) {
 		super(message);
-		this.name = "ApiError";
+		this.name = 'ApiError';
 		this.statusCode = statusCode;
 		this.message = message;
 		this.errorJson = errorJson;
@@ -16,7 +16,7 @@ class ApiError extends Error {
 
 export async function apiCall<TRequest, TResponse>(
 	url: string,
-	method: "GET" | "POST" | "PUT" | "DELETE",
+	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
 	schema: z.ZodType<TResponse>,
 	data?: TRequest,
 ): Promise<TResponse> {
@@ -24,7 +24,7 @@ export async function apiCall<TRequest, TResponse>(
 		const response = await fetch(url, {
 			method,
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 			},
 			body: data ? JSON.stringify(data) : undefined,
 		});
@@ -59,6 +59,6 @@ export async function apiCall<TRequest, TResponse>(
 				JSON.stringify(error),
 			);
 		}
-		throw new ApiError(500, "An unknown error occurred");
+		throw new ApiError(500, 'An unknown error occurred');
 	}
 }

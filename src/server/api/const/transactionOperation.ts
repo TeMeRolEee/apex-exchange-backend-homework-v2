@@ -1,4 +1,4 @@
 export enum TransactionOperation {
-	DECREASE = "decrease",
-	INCREASE = "increase",
+	DECREASE = 'decrease',
+	INCREASE = 'increase',
 }

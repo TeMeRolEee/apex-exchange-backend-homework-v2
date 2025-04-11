@@ -7,7 +7,7 @@ import { Status } from '@server/api/const/status';
 
 const ordersWorker = new Worker(
 	'orders',
-	async job => {
+	async (job) => {
 		console.log('Processing order:', job.name, job.data);
 		await setOrderStatus(job.data.id, Status.IN_PROGRESS, getRedisClient());
 
@@ -16,12 +16,14 @@ const ordersWorker = new Worker(
 		console.log(`Order ${job.data.id} processed`);
 	},
 	{
-		connection: getRedisClient()
-	}
+		connection: getRedisClient(),
+	},
 );
 
-ordersWorker.on('completed', async job => {
-	console.log(`✅ Job ${job.id} completed with status: ${await getOrderStatus(job.data.id, getRedisClient())}`);
+ordersWorker.on('completed', async (job) => {
+	console.log(
+		`✅ Job ${job.id} completed with status: ${await getOrderStatus(job.data.id, getRedisClient())}`,
+	);
 });
 
 ordersWorker.on('failed', (job, err) => {

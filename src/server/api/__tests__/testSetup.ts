@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
-import { beforeAll } from "vitest";
+import dotenv from 'dotenv';
+import { beforeAll } from 'vitest';
 
 beforeAll(() => {
-	dotenv.config({ path: ".env.test" });
+	dotenv.config({ path: '.env.test' });
 });

@@ -15,7 +15,7 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 	const maxRetryCount = 20;
 	try {
 		const exchangePostingRequest = createExchangePostingRequest(order);
-		console.log(chalk.blue("createExchangePostingRequest"));
+		console.log(chalk.blue('createExchangePostingRequest'));
 		let exchangePostingResult = false;
 		let exchangePostingCounter = 0;
 		let exchangePostingResponse;
@@ -32,7 +32,7 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 		}
 
 		if (exchangePostingResponse) {
-			console.log(chalk.green("exchangePostingResponse SUCCESS"));
+			console.log(chalk.green('exchangePostingResponse SUCCESS'));
 			const [sellerCurrency, buyerCurrency] = getCurrenciesFromMarket(
 				order.market,
 			);
@@ -52,14 +52,17 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 				buyer,
 			);
 
-			console.log(chalk.blue("executeTransactions"));
+			console.log(chalk.blue('executeTransactions'));
 
 			let executeTransactionsResponse;
 			let executeTransactionsCounter = 0;
 
 			let executeTransactionsResult: boolean = false;
 
-			while (!executeTransactionsResult && executeTransactionsCounter < maxRetryCount) {
+			while (
+				!executeTransactionsResult &&
+				executeTransactionsCounter < maxRetryCount
+			) {
 				try {
 					executeTransactionsResponse = await executeTransactions(
 						executeTransactionsRequestBody,
@@ -71,21 +74,21 @@ export const handleOrders = async (id: string, order: Order, redis: Redis) => {
 			}
 
 			if (executeTransactionsResponse) {
-				console.log(chalk.green("executeTransactionsResponse SUCCESS"));
+				console.log(chalk.green('executeTransactionsResponse SUCCESS'));
 				await setOrderStatus(id, Status.COMPLETED, redis);
 			} else {
 				console.log(
-					chalk.red("executeTransactions FAILED, Response: "),
+					chalk.red('executeTransactions FAILED, Response: '),
 					executeTransactionsResponse,
 				);
 				await setOrderStatus(id, Status.FAILED, redis);
 			}
 		} else {
-			console.log(chalk.red("exchangePostingResponse FAILED"));
+			console.log(chalk.red('exchangePostingResponse FAILED'));
 			await setOrderStatus(id, Status.FAILED, redis);
 		}
 	} catch (error) {
-		console.error(chalk.red("createOrders FAILED, Error: "), error);
+		console.error(chalk.red('createOrders FAILED, Error: '), error);
 		await setOrderStatus(id, Status.FAILED, redis);
 		throw error;
 	}

@@ -1,5 +1,5 @@
-import { TransactionOperation } from "@server/api/const/transactionOperation";
-import { z } from "zod";
+import { TransactionOperation } from '@server/api/const/transactionOperation';
+import { z } from 'zod';
 
 const TransactionSchema = z.object({
 	operation: z.nativeEnum(TransactionOperation),

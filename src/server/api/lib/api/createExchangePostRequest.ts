@@ -1,5 +1,5 @@
-import type { ExchangePostingRequest } from "@server/api/types/exchangePostingTypes";
-import type { Order } from "@server/api/types/order";
+import type { ExchangePostingRequest } from '@server/api/types/exchangePostingTypes';
+import type { Order } from '@server/api/types/order';
 
 export const createExchangePostingRequest = (
 	order: Order,
