@@ -39,3 +39,9 @@ next-env.d.ts
 
 .biome
 
+
+# sst
+.sst
+
+# open-next
+.open-next
