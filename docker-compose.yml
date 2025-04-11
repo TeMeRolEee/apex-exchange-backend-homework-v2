@@ -1,6 +1,42 @@
 version: '3.8'
 
 services:
+  worker:
+    build:
+      context: .
+    container_name: order-worker
+    entrypoint: ["pnpm", 'run', "worker"]
+    environment:
+      - NODE_ENV=development
+      - STATUS_REDIS_URL=redis://redis:6379/0
+      - QUEUE_REDIS_URL=redis://redis:6379/1
+      - EXCHANGE_HOST=https://exchange.apexlab.dev
+      - NEXT_PUBLIC_WEBSOCKET_CONNECTION_STRING=wss://streamer.cryptocompare.com/v2?api_key=<-------YOUR_API_KEY-------->
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - redis
+    links:
+      - redis
+  app:
+    build:
+      context: .
+    container_name: next-app
+    entrypoint: ["pnpm", "dev"]
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - STATUS_REDIS_URL=redis://redis:6379/0
+      - QUEUE_REDIS_URL=redis://redis:6379/1
+      - EXCHANGE_HOST=https://exchange.apexlab.dev
+      - NEXT_PUBLIC_WEBSOCKET_CONNECTION_STRING=wss://streamer.cryptocompare.com/v2?api_key=<-------YOUR_API_KEY-------->
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - redis
+    links:
+      - redis
   redis:
     image: redis:alpine
     ports:
@@ -8,6 +44,7 @@ services:
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
+    container_name: redis
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
